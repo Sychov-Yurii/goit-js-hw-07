@@ -1,9 +1,10 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
+//console.log(galleryItems);
 
 const container = document.querySelector('.gallery');
+
 const markup = galleryItems.map(({ preview, original, description }) => {
     return `
     <li class="gallery__item">
@@ -12,19 +13,33 @@ const markup = galleryItems.map(({ preview, original, description }) => {
        </a>
     </li>`;
 }).join('');
+
 container.insertAdjacentHTML("beforeend", markup);
 container.addEventListener('click', handlerClick); 
 
+
 function handlerClick(evt){
-    if (evt.target === evt.currentTarget) {
-        return   
-
-    }
-
-    const currentImage = evt.target.closest('#description');
-    console.log(currentImage);
     
+    if (!evt.target.classList.contains('gallery__image')) {
+     return   
+    }
+    const imageDescription = evt.target.alt;
+    const galleryItem = galleryItems.find(({description}) => description === imageDescription);
+    console.log(galleryItem);
+    const instance = basicLightbox.create(`
+    <div class="gallery__image">
+        <img src="${galleryItem.original}" width="900" alt="${galleryItem.description}">
+    </div>
+`);
+instance.show()
 }
+
+
+
+
+
+
+
 
 
 // export const galleryItems = [
