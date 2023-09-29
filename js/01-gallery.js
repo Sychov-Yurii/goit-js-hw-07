@@ -5,6 +5,7 @@ import { galleryItems } from './gallery-items.js';
 
 const container = document.querySelector('.gallery');
 
+
 const markup = galleryItems.map(({ preview, original, description }) => {
     return `
     <li class="gallery__item">
@@ -17,8 +18,8 @@ const markup = galleryItems.map(({ preview, original, description }) => {
 container.insertAdjacentHTML("beforeend", markup);
 container.addEventListener('click', handlerClick); 
 
-
 function handlerClick(evt){
+    evt.preventDefault();
     
     if (!evt.target.classList.contains('gallery__image')) {
      return   
@@ -31,11 +32,15 @@ function handlerClick(evt){
         <img src="${galleryItem.original}" width="900" alt="${galleryItem.description}">
     </div>
 `);
-instance.show()
+instance.show();
+
+document.addEventListener("keydown", handlerKey)
+function handlerKey(evt) {
+    if (evt.code === 'Escape') {
+     instance.close()
+    }
+ }
 }
-
-
-
 
 
 
